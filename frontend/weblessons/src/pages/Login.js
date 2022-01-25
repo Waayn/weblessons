@@ -52,7 +52,7 @@ const Login = () => {
                 <Form.Label>Mot de passe</Form.Label>
                 <div className="position-relative">
                     <Form.Control type={seePassword ? "text" : "password"} placeholder="Entrez votre mot de passe" name="password" value={infos.password} onChange={handleInfos} />
-                    {seePassword ? <i onClick={handleEye} className="bi bi-eye-slash eye-login"></i> : <i onClick={handleEye} className="bi bi-eye eye-login"></i>}
+                    {seePassword ? <i onClick={handleEye} className="bi bi-eye eye-login"></i> : <i onClick={handleEye} className="bi bi-eye-slash eye-login"></i>}
                 </div>
             </Form.Group>
             {error !== "" && <Alert variant="danger" style={{ fontSize: "13px" }} className="w-100 text-center">{error}</Alert>}

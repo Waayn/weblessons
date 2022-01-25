@@ -4,6 +4,7 @@ import { createUser } from '../api/axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 const Register = () => {
 
@@ -24,7 +25,8 @@ const Register = () => {
             if (infos.password === password2) {
                 createUser(infos)
                     .then(res => {
-                        NotificationManager.success(<Link to='/login'>Se connecter</Link>, `Compte ${infos.username} créé`);
+                        NotificationManager.success(`Compte ${infos.username} créé`, 'Succès')
+                        setTimeout(() => { navigate('/login') }, 2000)
                     })
             } else setError("Les mots de passe ne concordent pas")
         } else setError("Veuillez remplir les champs")
@@ -59,6 +61,7 @@ const Register = () => {
                 <Form.Label>Adresse email</Form.Label>
                 <Form.Control type="email" placeholder="Entrez votre adresse email" name="email" value={infos.email} onChange={handleInfos} />
             </Form.Group>
+
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label>Pseudo</Form.Label>
                 <Form.Control type="text" placeholder="Entrez votre adresse pseudo" name="username" value={infos.username} onChange={handleInfos} />
@@ -68,14 +71,15 @@ const Register = () => {
                 <Form.Label>Mot de passe</Form.Label>
                 <div className="position-relative">
                     <Form.Control type={seePassword ? "text" : "password"} placeholder="Entrez votre mot de passe" name="password" value={infos.password} onChange={handleInfos} />
-                    {seePassword ? <i onClick={handleEye} className="bi bi-eye-slash eye-login"></i> : <i onClick={handleEye} className="bi bi-eye eye-login"></i>}
+                    {seePassword ? <i onClick={handleEye} className="bi bi-eye eye-login"></i> : <i onClick={handleEye} className="bi bi-eye-slash eye-login"></i>}
                 </div>
             </Form.Group>
+
             <Form.Group className="mb-3" controlId="formBasicPassword2">
                 <Form.Label>Validez le mot de passe</Form.Label>
                 <div className="position-relative">
                     <Form.Control type={seePassword2 ? "text" : "password"} placeholder="Entrez votre mot de passe" name="password2" value={infos.password2} onChange={handlePassword2} />
-                    {seePassword2 ? <i onClick={handleEye2} className="bi bi-eye-slash eye-login"></i> : <i onClick={handleEye2} className="bi bi-eye eye-login"></i>}
+                    {seePassword2 ? <i onClick={handleEye2} className="bi bi-eye eye-login"></i> : <i onClick={handleEye2} className="bi bi-eye-slash eye-login"></i>}
                 </div>
             </Form.Group>
             {error !== "" && <Alert variant="danger" style={{ fontSize: "13px" }} className="w-100 text-center">{error}</Alert>}
