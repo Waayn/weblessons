@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 // import Pokemon from "./database/models/Pokemon.js";
 import User from "./database/models/User.js";
+import Article from "./database/models/Article.js";
 
 dotenv.config()
 const PORT = process.env.PORT
@@ -12,8 +13,10 @@ const SALT = process.env.SALT
 const app = express()
 // const pokemonDB = new Pokemon(URI)
 // pokemonDB.connect()
-const userDB = new User(URI)
+const userDB = new User(URI, SALT)
+const articleDB = new Article(URI)
 userDB.connect()
+articleDB.connect()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -28,6 +31,30 @@ app.post('/create/user', (req, res) => {
         return res.status(400).json({ message: 'Error. Please enter a username, a email and a password' })
     }
     userDB.createUser({ username: req.body.username, password: req.body.password, email: req.body.email })
+        .then(result => res.status(200).json(result))
+        .catch(error => res.status(500).json({ error }))
+})
+
+app.post('/create/article', (req, res) => {
+    if (!req.body.title || !req.body.content || !req.body.questions) {
+        return res.status(400).json({ message: 'Error. Please enter a title, a content and the questions' })
+    }
+    articleDB.createArticle({ title: req.body.title, content: req.body.content, questions: req.body.questions })
+        .then(result => res.status(200).json(result))
+        .catch(error => res.status(500).json({ error }))
+})
+
+app.post('/get/article', (req, res) => {
+    if (!req.body.id) {
+        return res.status(400).json({ message: 'Error. Please enter an id' })
+    }
+    articleDB.getArticleById(req.body.id)
+        .then(result => res.status(200).json(result))
+        .catch(error => res.status(500).json(error))
+})
+
+app.get('/articles', (req, res) => {
+    articleDB.getArticles()
         .then(result => res.status(200).json(result))
         .catch(error => res.status(500).json({ error }))
 })

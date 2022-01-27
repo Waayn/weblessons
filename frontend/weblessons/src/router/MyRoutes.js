@@ -5,6 +5,8 @@ import Home from "../pages/Home";
 import Redirect from "../pages/Redirect";
 import Login from "../pages/Login";
 import Register from '../pages/Register';
+import CreateArticle from '../pages/CreateArticle';
+import Article from '../pages/Article';
 import { getUserById } from '../api/axios';
 import { useDispatch } from 'react-redux';
 import { setUserInfos } from '../app/store';
@@ -21,7 +23,7 @@ const MyRoutes = () => {
                 .catch(() => setCookie('weblessons', '', { expires: new Date(Date.now() - (3600 * 1000 * 25)) }))
         }
         //eslint-disable-next-line
-    }, [cookies['weblessons']])
+    }, [])
 
     return <Routes>
         {typeof cookies['weblessons'] === 'undefined' && <>
@@ -30,7 +32,8 @@ const MyRoutes = () => {
             <Route path="*" element={<Redirect path="/login" />} />
         </>}
         {typeof cookies['weblessons'] !== 'undefined' && <>
-            <Route exact path='/article/:articleId' element={<Home />} />
+            <Route exact path='/article/:articleId' element={<Article />} />
+            <Route exact path='/create/article' element={<CreateArticle />} />
             <Route exact path='/' element={<Home />} />
             <Route path="*" element={<Redirect path="/" />} />
         </>}
