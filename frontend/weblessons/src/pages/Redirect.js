@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Redirect = () => {
+const Redirect = ({ path }) => {
 
     const navigate = useNavigate()
 
     useEffect(() => {
-        navigate("/")
+        navigate(path)
         //eslint-disable-next-line
     }, [])
 

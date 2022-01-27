@@ -53,7 +53,7 @@ const Register = () => {
         setSeePassword2(!seePassword2)
     }
 
-    return <Container className="min-vh-100 d-flex align-items-center justify-content-center flex-column">
+    return <Container className="mt-5 d-flex align-items-center justify-content-center flex-column">
         <NotificationContainer />
         <h1 className="mb-5">Inscription</h1>
         <Form className="d-flex justify-content-center flex-column mb-5 w-100" style={{ maxWidth: "400px" }} onSubmit={handleSubmit}>

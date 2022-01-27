@@ -43,10 +43,22 @@ export default class User {
                 const user = await Users.findOne({ email: userInfos.email })
                 const resultHash = await compareHash(userInfos.password.toString(), user.password)
                 resultHash === true ?
-                    resolve({ username: user.username, email: user.email, role: user.role }) :
+                    resolve({ username: user.username, email: user.email, role: user.role, id: user._id.toString() }) :
                     reject({ error: "Wrong password" })
             } catch (err) {
                 reject({ error: "Invalid email or database connection error" })
+            }
+        })
+    }
+
+    async getUserById(userId) {
+        const Users = mongoose.model('users', this.userSchema)
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = await Users.findById(userId)
+                resolve({ username: user.username, email: user.email, role: user.role, id: user._id.toString() })
+            } catch (err) {
+                reject({ error: "Invalid id or database connection error" })
             }
         })
     }

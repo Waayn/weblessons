@@ -23,3 +23,15 @@ export const createUser = (infos) => {
         }
     })
 }
+
+export const getUserById = (id) => {
+    return new Promise((resolve, reject) => {
+        try {
+            axios.post('http://localhost:1510/get/user', { id })
+                .then(res => resolve(res))
+                .catch(err => reject(err))
+        } catch (err) {
+            reject({ error: "Impossible d'accéder au serveur" })
+        }
+    })
+}
